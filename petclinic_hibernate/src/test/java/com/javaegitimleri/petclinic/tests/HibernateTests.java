@@ -1,5 +1,7 @@
 package com.javaegitimleri.petclinic.tests;
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Test;
@@ -30,5 +32,25 @@ public class HibernateTests {
 		
 		tx.commit();
 		session.close();
+	}
+	
+	@Test
+	public void testFieldLevelAccess() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		Pet pet = new Pet("kedicik", new Date());
+		pet.setId(1L);
+		
+		session.persist(pet);
+		
+		tx.commit();
+		session.close();
+		
+		session = HibernateConfig.getSessionFactory().openSession();
+		
+		Pet pet2 = session.get(Pet.class, 1L);
+		
+		System.out.println(pet2);
 	}
 }

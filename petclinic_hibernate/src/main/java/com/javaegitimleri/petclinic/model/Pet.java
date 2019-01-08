@@ -1,5 +1,7 @@
 package com.javaegitimleri.petclinic.model;
 
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +17,18 @@ public class Pet {
 	@Basic
 	@Column(name="pet_name")
 	private String name;
+	
+	@Column(name="birth_date")
+	private Date birthDate;
+	
+	public Pet() {
+		
+	}
+	
+	public Pet(String name, Date birthDate) {
+		this.name = name;
+		this.birthDate = birthDate;
+	}
 
 	public Long getId() {
 		return id;
@@ -30,5 +44,10 @@ public class Pet {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Pet [id=" + id + ", name=" + name + ", birthDate=" + birthDate + "]";
 	}
 }
