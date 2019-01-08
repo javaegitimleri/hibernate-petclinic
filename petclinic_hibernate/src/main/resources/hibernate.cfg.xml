@@ -6,5 +6,6 @@
   <property name="hibernate.connection.driver_class">org.h2.Driver</property>
   <property name="hibernate.connection.url">jdbc:h2:tcp://localhost/~/test</property>
   <property name="hibernate.connection.username">sa</property>
+  <mapping class="com.javaegitimleri.petclinic.model.Pet"/>
  </session-factory>
 </hibernate-configuration>
