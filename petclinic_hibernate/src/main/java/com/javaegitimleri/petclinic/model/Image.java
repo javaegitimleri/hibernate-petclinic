@@ -23,6 +23,9 @@ public class Image extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name="pet_id")
 	private Pet pet;
+	
+	@OneToOne(mappedBy="image")
+	private ImageContent imageContent;
 
 	public String getFilePath() {
 		return filePath;
