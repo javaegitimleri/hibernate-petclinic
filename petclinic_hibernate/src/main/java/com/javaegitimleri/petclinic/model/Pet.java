@@ -45,9 +45,8 @@ public class Pet extends BaseEntity {
 	@OrderColumn(name="visit_order")
 	private List<Visit> visits = new ArrayList<>();
 	
-	@OneToMany
+	@OneToMany(mappedBy="pet")
 	@MapKey(name="filePath")
-	@JoinColumn(name="pet_id")
 	private Map<String, Image> imagesByFilePath = new HashMap<>();
 	
 	public Pet() {

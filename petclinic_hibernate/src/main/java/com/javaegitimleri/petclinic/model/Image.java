@@ -2,6 +2,8 @@ package com.javaegitimleri.petclinic.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +18,10 @@ public class Image extends BaseEntity {
 	
 	@Column(name="width")
 	private int width;
+	
+	@ManyToOne
+	@JoinColumn(name="pet_id")
+	private Pet pet;
 
 	public String getFilePath() {
 		return filePath;
