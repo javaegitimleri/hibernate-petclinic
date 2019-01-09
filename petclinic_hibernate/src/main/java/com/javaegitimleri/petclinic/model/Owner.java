@@ -35,9 +35,7 @@ public class Owner extends Person {
 	@Embedded
 	private Address address;
 	
-	@ElementCollection
-	@CollectionTable(name="t_owner_emails",joinColumns=@JoinColumn(name="owner_id"))
-	private Set<Email> emails = new HashSet<>();
+
 	
 
 	public Set<Pet> getPets() {

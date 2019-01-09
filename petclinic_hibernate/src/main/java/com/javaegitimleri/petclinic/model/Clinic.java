@@ -15,14 +15,9 @@ public class Clinic extends BaseEntity {
 	private String name;
 
 	@OneToMany
-	@JoinTable(name = "t_clinic_owner", joinColumns = @JoinColumn(name = "clinic_id"), inverseJoinColumns = @JoinColumn(name = "owner_id"))
-	private Set<Owner> owners = new HashSet<>();
+	@JoinTable(name = "t_clinic_person", joinColumns = @JoinColumn(name = "clinic_id"), inverseJoinColumns = @JoinColumn(name = "person_id"))
+	private Set<Person> persons = new HashSet<>();
 
-	@OneToMany
-	@JoinTable(name = "t_clinic_vet", joinColumns = @JoinColumn(name = "clinic_id"), inverseJoinColumns = @JoinColumn(name = "vet_id"))
-	private Set<Vet> vets = new HashSet<>();
-
-	
 	public String getName() {
 		return name;
 	}
@@ -30,5 +25,15 @@ public class Clinic extends BaseEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public Set<Person> getPersons() {
+		return persons;
+	}
+
+	public void setPersons(Set<Person> persons) {
+		this.persons = persons;
+	}
+	
+	
 
 }

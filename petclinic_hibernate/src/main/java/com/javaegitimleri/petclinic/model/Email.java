@@ -11,7 +11,7 @@ public class Email {
 	private String email;
 	
 	@Parent
-	private Owner owner;
+	private Person person;
 
 	public String getEmail() {
 		return email;
@@ -21,11 +21,13 @@ public class Email {
 		this.email = email;
 	}
 
-	public Owner getOwner() {
-		return owner;
+	public Person getPerson() {
+		return person;
 	}
 
-	public void setOwner(Owner owner) {
-		this.owner = owner;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
+
+
 }
