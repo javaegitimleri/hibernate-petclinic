@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="t_pet")
@@ -21,6 +23,7 @@ public class Pet extends BaseEntity {
 	private String name;
 	
 	@Column(name="birth_date")
+	@Temporal(TemporalType.DATE)
 	private Date birthDate;
 	
 	public Pet() {
