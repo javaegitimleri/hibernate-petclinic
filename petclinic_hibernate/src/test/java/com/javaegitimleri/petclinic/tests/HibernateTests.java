@@ -134,4 +134,29 @@ public class HibernateTests {
 		tx.commit();
 		session.close();
 	}
+	
+	@Test
+	public void testMappedBy() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.getTransaction();
+		tx.begin();
+		
+		Owner owner = session.get(Owner.class, 1L);
+		Pet pet = session.get(Pet.class, 101L);
+		
+		//owner.getPets().add(pet);
+		
+		//pet.setOwner(owner);
+		
+		//owner.getPets().remove(pet);
+		
+		pet.setOwner(null);
+		
+		//session.update(owner);
+		//session.merge(owner);
+		
+		tx.commit();
+		session.close();
+		
+	}
 }
