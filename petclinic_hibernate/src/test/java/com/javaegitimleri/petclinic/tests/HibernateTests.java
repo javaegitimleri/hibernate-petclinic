@@ -53,4 +53,22 @@ public class HibernateTests {
 		
 		System.out.println(pet2);
 	}
+	
+	@Test
+	public void testWithoutTX() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.getTransaction();
+		tx.begin();
+		
+		Pet pet = new Pet("kedicik", new Date());
+		pet.setId(1L);
+		
+		session.persist(pet);
+		
+		//session.flush();
+		tx.commit();
+		
+		session.close();
+		
+	}
 }
