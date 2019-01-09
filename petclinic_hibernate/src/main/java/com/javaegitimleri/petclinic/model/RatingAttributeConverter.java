@@ -3,7 +3,7 @@ package com.javaegitimleri.petclinic.model;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-@Converter(autoApply=true)
+@Converter(autoApply=false)
 public class RatingAttributeConverter implements AttributeConverter<Rating, Integer> {
 
 	@Override

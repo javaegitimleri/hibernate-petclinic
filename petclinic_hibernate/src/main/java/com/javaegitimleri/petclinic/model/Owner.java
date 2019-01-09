@@ -1,20 +1,23 @@
 package com.javaegitimleri.petclinic.model;
 
-import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
+@TypeDef(name="ratingType",typeClass=RatingUserType.class)
 @SecondaryTable(name="t_address",pkJoinColumns=@PrimaryKeyJoinColumn(name="owner_id"))
 @Entity
 @Table(name="t_owner")
 public class Owner extends Person {
 	
 	
-	@Convert(converter=RatingAttributeConverter.class)
+	@Type(type="ratingType")
+	//@Convert(converter=RatingAttributeConverter.class)
 	//@Enumerated(EnumType.ORDINAL)
 	private Rating rating;
 	
