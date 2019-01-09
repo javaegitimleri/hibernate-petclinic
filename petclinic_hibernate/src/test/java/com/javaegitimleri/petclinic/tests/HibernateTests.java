@@ -8,11 +8,13 @@ import org.junit.Test;
 
 import com.javaegitimleri.petclinic.config.HibernateConfig;
 import com.javaegitimleri.petclinic.model.Address;
+import com.javaegitimleri.petclinic.model.Image;
 import com.javaegitimleri.petclinic.model.Owner;
 import com.javaegitimleri.petclinic.model.OwnerWithCompositePK;
+import com.javaegitimleri.petclinic.model.OwnerWithCompositePK.OwnerId;
 import com.javaegitimleri.petclinic.model.Pet;
 import com.javaegitimleri.petclinic.model.Rating;
-import com.javaegitimleri.petclinic.model.OwnerWithCompositePK.OwnerId;
+import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
 	@Test
@@ -158,5 +160,22 @@ public class HibernateTests {
 		tx.commit();
 		session.close();
 		
+	}
+	
+	@Test
+	public void testParentChildAssoc() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.getTransaction();
+		tx.begin();
+		
+		Pet pet = session.get(Pet.class, 1L);
+		Visit visit = session.get(Visit.class, 101L);
+		Image image = session.get(Image.class, 1001L);
+		
+		pet.getVisits().remove(visit);
+		pet.getImagesByFilePath().remove("/myimage");
+		
+		tx.commit();
+		session.close();
 	}
 }

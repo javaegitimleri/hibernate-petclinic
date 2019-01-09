@@ -19,6 +19,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table(name="t_pet")
 @SequenceGenerator(name="seqGen",sequenceName="pet_seq")
@@ -40,13 +43,14 @@ public class Pet extends BaseEntity {
 	@JoinColumn(name="owner_id")
 	private Owner owner;
 	
-	@OneToMany
+	@OneToMany(orphanRemoval=true)
 	@JoinColumn(name="pet_id")
 	@OrderColumn(name="visit_order")
 	private List<Visit> visits = new ArrayList<>();
 	
 	@OneToMany(mappedBy="pet")
 	@MapKey(name="filePath")
+	@Cascade(CascadeType.DELETE_ORPHAN)
 	private Map<String, Image> imagesByFilePath = new HashMap<>();
 	
 	public Pet() {
@@ -92,6 +96,24 @@ public class Pet extends BaseEntity {
 
 	public void setOwner(Owner owner) {
 		this.owner = owner;
+	}
+	
+	
+
+	public List<Visit> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<Visit> visits) {
+		this.visits = visits;
+	}
+
+	public Map<String, Image> getImagesByFilePath() {
+		return imagesByFilePath;
+	}
+
+	public void setImagesByFilePath(Map<String, Image> imagesByFilePath) {
+		this.imagesByFilePath = imagesByFilePath;
 	}
 
 	@Override
