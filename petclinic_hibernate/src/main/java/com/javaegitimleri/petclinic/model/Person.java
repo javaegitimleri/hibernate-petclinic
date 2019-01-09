@@ -1,9 +1,13 @@
 package com.javaegitimleri.petclinic.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class Person extends BaseEntity {
 	@Column(name="first_name")
 	private String firstName;

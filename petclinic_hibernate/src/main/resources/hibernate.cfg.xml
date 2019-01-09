@@ -17,5 +17,6 @@
   <mapping class="com.javaegitimleri.petclinic.model.Clinic"/>
   <mapping class="com.javaegitimleri.petclinic.model.PetType"/>
   <mapping class="com.javaegitimleri.petclinic.model.Specialty"/>
+  <mapping class="com.javaegitimleri.petclinic.model.Person"/>
  </session-factory>
 </hibernate-configuration>
