@@ -11,6 +11,7 @@ import com.javaegitimleri.petclinic.model.Address;
 import com.javaegitimleri.petclinic.model.Owner;
 import com.javaegitimleri.petclinic.model.OwnerWithCompositePK;
 import com.javaegitimleri.petclinic.model.Pet;
+import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.OwnerWithCompositePK.OwnerId;
 
 public class HibernateTests {
@@ -120,6 +121,7 @@ public class HibernateTests {
 		Owner owner = new Owner();
 		owner.setFirstName("Kenan");
 		owner.setLastName("Sevindik");
+		owner.setRating(Rating.PREMIUM);
 		
 		Address address = new Address();
 		address.setStreet("Dumlupýnar Bulv.");
