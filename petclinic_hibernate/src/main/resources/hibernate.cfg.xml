@@ -11,5 +11,8 @@
   <mapping class="com.javaegitimleri.petclinic.model.Owner"/>
   <mapping class="com.javaegitimleri.petclinic.model.Vet"/>
   <mapping class="com.javaegitimleri.petclinic.model.Visit"/>
+  <mapping class="com.javaegitimleri.petclinic.model.Image"/>
+  <mapping class="com.javaegitimleri.petclinic.model.ImageContent"/>
+  
  </session-factory>
 </hibernate-configuration>
