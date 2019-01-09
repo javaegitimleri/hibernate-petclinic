@@ -9,5 +9,6 @@
   <mapping class="com.javaegitimleri.petclinic.model.Pet"/>
   <mapping class="com.javaegitimleri.petclinic.model.OwnerWithCompositePK"/>
   <mapping class="com.javaegitimleri.petclinic.model.Owner"/>
+  <mapping class="com.javaegitimleri.petclinic.model.Vet"/>
  </session-factory>
 </hibernate-configuration>
