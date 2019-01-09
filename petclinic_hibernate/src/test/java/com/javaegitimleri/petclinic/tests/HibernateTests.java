@@ -25,7 +25,7 @@ public class HibernateTests {
 		Transaction tx = session.beginTransaction();
 		
 		Pet pet = new Pet();
-		pet.setId(1L);
+		//pet.setId(1L);
 		pet.setName("kedicik");
 		
 		session.persist(pet);
