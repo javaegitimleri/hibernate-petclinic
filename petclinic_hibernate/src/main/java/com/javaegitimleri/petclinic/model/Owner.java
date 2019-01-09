@@ -3,8 +3,12 @@ package com.javaegitimleri.petclinic.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
@@ -31,6 +35,10 @@ public class Owner extends Person {
 	@Embedded
 	private Address address;
 	
+	@ElementCollection
+	@CollectionTable(name="t_owner_emails",joinColumns=@JoinColumn(name="owner_id"))
+	@Column(name="email")
+	private Set<String> emails = new HashSet<>();
 	
 
 	public Set<Pet> getPets() {
