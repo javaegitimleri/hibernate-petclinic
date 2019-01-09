@@ -7,6 +7,7 @@
   <property name="hibernate.connection.url">jdbc:h2:tcp://localhost/~/test</property>
   <property name="hibernate.connection.username">sa</property>
   <mapping class="com.javaegitimleri.petclinic.model.Pet"/>
+  <mapping class="com.javaegitimleri.petclinic.model.OwnerWithCompositePK"/>
   <mapping class="com.javaegitimleri.petclinic.model.Owner"/>
  </session-factory>
 </hibernate-configuration>

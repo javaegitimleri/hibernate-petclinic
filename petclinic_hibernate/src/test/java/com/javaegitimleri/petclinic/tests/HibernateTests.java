@@ -7,9 +7,11 @@ import org.hibernate.Transaction;
 import org.junit.Test;
 
 import com.javaegitimleri.petclinic.config.HibernateConfig;
+import com.javaegitimleri.petclinic.model.Address;
 import com.javaegitimleri.petclinic.model.Owner;
+import com.javaegitimleri.petclinic.model.OwnerWithCompositePK;
 import com.javaegitimleri.petclinic.model.Pet;
-import com.javaegitimleri.petclinic.model.Owner.OwnerId;
+import com.javaegitimleri.petclinic.model.OwnerWithCompositePK.OwnerId;
 
 public class HibernateTests {
 	@Test
@@ -91,7 +93,7 @@ public class HibernateTests {
 	
 	@Test
 	public void testCompositePK() {
-		Owner owner = new Owner();
+		OwnerWithCompositePK owner = new OwnerWithCompositePK();
 		
 		OwnerId id = new OwnerId();
 		id.setFirstName("Kenan");
@@ -102,6 +104,28 @@ public class HibernateTests {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		Transaction tx = session.getTransaction();
 		tx.begin();
+		
+		session.persist(owner);
+		
+		tx.commit();
+		session.close();
+	}
+	
+	@Test
+	public void testEmbeddable() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.getTransaction();
+		tx.begin();
+		
+		Owner owner = new Owner();
+		owner.setFirstName("Kenan");
+		owner.setLastName("Sevindik");
+		
+		Address address = new Address();
+		address.setStreet("Dumlupýnar Bulv.");
+		address.setPhone("3122101036");
+		
+		owner.setAddress(address);
 		
 		session.persist(owner);
 		
