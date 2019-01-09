@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,6 +28,10 @@ public class Pet extends BaseEntity {
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;
 	
+	@ManyToOne
+	@JoinColumn(name="type_id")
+	private PetType type;
+	
 	public Pet() {
 		
 	}
@@ -33,6 +39,24 @@ public class Pet extends BaseEntity {
 	public Pet(String name, Date birthDate) {
 		this.name = name;
 		this.birthDate = birthDate;
+	}
+	
+	
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public PetType getType() {
+		return type;
+	}
+
+	public void setType(PetType type) {
+		this.type = type;
 	}
 
 	public String getName() {
