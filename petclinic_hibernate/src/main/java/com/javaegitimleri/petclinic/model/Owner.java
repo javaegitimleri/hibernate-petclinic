@@ -37,8 +37,7 @@ public class Owner extends Person {
 	
 	@ElementCollection
 	@CollectionTable(name="t_owner_emails",joinColumns=@JoinColumn(name="owner_id"))
-	@Column(name="email")
-	private Set<String> emails = new HashSet<>();
+	private Set<Email> emails = new HashSet<>();
 	
 
 	public Set<Pet> getPets() {
