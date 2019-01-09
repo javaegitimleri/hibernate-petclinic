@@ -2,13 +2,16 @@ package com.javaegitimleri.petclinic.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.SequenceGenerator;
@@ -41,6 +44,11 @@ public class Pet extends BaseEntity {
 	@JoinColumn(name="pet_id")
 	@OrderColumn(name="visit_order")
 	private List<Visit> visits = new ArrayList<>();
+	
+	@OneToMany
+	@MapKey(name="filePath")
+	@JoinColumn(name="pet_id")
+	private Map<String, Image> imagesByFilePath = new HashMap<>();
 	
 	public Pet() {
 		
