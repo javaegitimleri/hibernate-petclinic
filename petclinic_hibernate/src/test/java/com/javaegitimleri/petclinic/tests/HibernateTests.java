@@ -178,4 +178,25 @@ public class HibernateTests {
 		tx.commit();
 		session.close();
 	}
+	
+	@Test
+	public void testLazyEagerAccess() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.getTransaction();
+		tx.begin();
+		
+		Pet pet = session.get(Pet.class, 101L);
+		System.out.println("---pet loaded---");
+		
+		System.out.println("visits size :" + pet.getVisits().size());
+		System.out.println("---");
+		System.out.println("pet type name :" + pet.getType().getName());
+		System.out.println(pet.getType().getClass());
+		
+		tx.commit();
+		session.close();
+
+		
+		
+	}
 }

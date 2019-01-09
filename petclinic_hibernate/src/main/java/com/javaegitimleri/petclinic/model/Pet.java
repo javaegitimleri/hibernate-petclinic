@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
@@ -35,7 +36,7 @@ public class Pet extends BaseEntity {
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="type_id")
 	private PetType type;
 	
@@ -43,7 +44,7 @@ public class Pet extends BaseEntity {
 	@JoinColumn(name="owner_id")
 	private Owner owner;
 	
-	@OneToMany(orphanRemoval=true)
+	@OneToMany(orphanRemoval=true,fetch=FetchType.LAZY)
 	@JoinColumn(name="pet_id")
 	@OrderColumn(name="visit_order")
 	private List<Visit> visits = new ArrayList<>();
