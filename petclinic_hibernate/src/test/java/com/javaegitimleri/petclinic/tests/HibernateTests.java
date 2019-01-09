@@ -199,4 +199,18 @@ public class HibernateTests {
 		
 		
 	}
+	
+	@Test
+	public void testOneToOneLazyProblem() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.getTransaction();
+		tx.begin();
+		
+		Image image = session.get(Image.class, 1L);
+		System.out.println("---image loaded---");
+		System.out.println(new String(image.getImageContent().getContent()));
+		System.out.println(image.getImageContent().getClass());
+		tx.commit();
+		session.close();
+	}
 }

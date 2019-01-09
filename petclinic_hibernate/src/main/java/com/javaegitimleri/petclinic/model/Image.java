@@ -2,6 +2,7 @@ package com.javaegitimleri.petclinic.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -24,7 +25,8 @@ public class Image extends BaseEntity {
 	@JoinColumn(name="pet_id")
 	private Pet pet;
 	
-	@OneToOne(mappedBy="image")
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="image_content_id")
 	private ImageContent imageContent;
 
 	public String getFilePath() {
@@ -50,4 +52,22 @@ public class Image extends BaseEntity {
 	public void setWidth(int width) {
 		this.width = width;
 	}
+
+	public Pet getPet() {
+		return pet;
+	}
+
+	public void setPet(Pet pet) {
+		this.pet = pet;
+	}
+
+	public ImageContent getImageContent() {
+		return imageContent;
+	}
+
+	public void setImageContent(ImageContent imageContent) {
+		this.imageContent = imageContent;
+	}
+	
+	
 }
