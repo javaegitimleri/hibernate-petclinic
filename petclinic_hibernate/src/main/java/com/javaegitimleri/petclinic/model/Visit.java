@@ -22,10 +22,6 @@ public class Visit extends BaseEntity {
 	@Lob
 	@Column(name="visit_description")
 	private String visitDescription;
-	
-	@ManyToOne
-	@JoinColumn(name="pet_id")
-	private Pet pet;
 
 	public Date getVisitDate() {
 		return visitDate;
