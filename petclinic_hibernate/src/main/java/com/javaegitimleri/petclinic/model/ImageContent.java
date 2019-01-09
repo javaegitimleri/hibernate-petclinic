@@ -2,6 +2,7 @@ package com.javaegitimleri.petclinic.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
@@ -9,13 +10,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="t_image_content")
-public class ImageContent {
-	
-	@Id
-	private Long id;
+public class ImageContent extends BaseEntity {
 	
 	@OneToOne
-	@MapsId
+	@JoinColumn(name="image_id")
 	private Image image;
 	
 	@Lob
@@ -27,14 +25,6 @@ public class ImageContent {
 
 	public void setContent(byte[] content) {
 		this.content = content;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Image getImage() {
