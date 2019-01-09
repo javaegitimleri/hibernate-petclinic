@@ -5,7 +5,6 @@ import java.util.Set;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
@@ -26,8 +25,7 @@ public class Owner extends Person {
 	//@Enumerated(EnumType.ORDINAL)
 	private Rating rating;
 	
-	@OneToMany
-	@JoinColumn(name="owner_id")
+	@OneToMany(mappedBy="owner")
 	private Set<Pet> pets = new HashSet<>();
 	
 	@Embedded

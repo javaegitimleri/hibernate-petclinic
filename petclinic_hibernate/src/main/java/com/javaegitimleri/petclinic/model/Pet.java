@@ -32,6 +32,10 @@ public class Pet extends BaseEntity {
 	@JoinColumn(name="type_id")
 	private PetType type;
 	
+	@ManyToOne
+	@JoinColumn(name="owner_id")
+	private Owner owner;
+	
 	public Pet() {
 		
 	}
@@ -65,6 +69,16 @@ public class Pet extends BaseEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	
+
+	public Owner getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
 	}
 
 	@Override
