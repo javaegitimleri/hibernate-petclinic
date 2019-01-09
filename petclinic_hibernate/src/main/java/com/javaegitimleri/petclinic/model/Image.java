@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +23,9 @@ public class Image extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name="pet_id")
 	private Pet pet;
+	
+	@OneToOne(mappedBy="image")
+	private ImageContent imageContent;
 
 	public String getFilePath() {
 		return filePath;
