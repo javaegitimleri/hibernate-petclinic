@@ -3,6 +3,7 @@ package com.javaegitimleri.petclinic.tests;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.IdentifierLoadAccess;
 import org.hibernate.MultiIdentifierLoadAccess;
@@ -28,6 +29,28 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	
+	@Test
+	public void testDetachedEntitiesAndLazy() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		Pet pet = session.get(Pet.class, 1L);
+		
+		//session.close();
+		//session.clear();
+		session.evict(pet);
+		
+		System.out.println("--- after session evict ---");
+		
+		System.out.println("session open :" + session.isOpen());
+		
+		Map<String, Image> imagesByFilePath = pet.getImagesByFilePath();
+		System.out.println(imagesByFilePath.getClass());
+		System.out.println("image size :" + imagesByFilePath.size());
+		
+	}
 	
 	@Test
 	public void testDetachedEntities() {
