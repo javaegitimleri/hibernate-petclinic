@@ -1,5 +1,6 @@
 package com.javaegitimleri.petclinic.tests;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +27,24 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testSave() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		Pet pet = new Pet();
+		pet.setName("kedicik 2");
+		
+		Serializable pk = session.save(pet);
+		
+		System.out.println("--- after save called ---");
+		
+		tx.commit();
+		session.close();
+		
+		System.out.println(pk == pet.getId());
+	}
 	
 	@Test
 	public void testPersist() {
