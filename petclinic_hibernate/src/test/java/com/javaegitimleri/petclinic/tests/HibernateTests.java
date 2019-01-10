@@ -17,6 +17,27 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testLoad() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		Pet pet = session.load(Pet.class, 1L);
+		System.out.println("--- pet loaded ---");
+		if(pet == null) {
+			System.out.println("pet is null returning");
+			return;
+		}
+		System.out.println(pet.getName());
+		System.out.println(pet.getClass());
+		
+		Pet pet2 = session.get(Pet.class, 1L);
+		System.out.println("--- pet loaded second time ---");
+		System.out.println(pet2.getName());
+		System.out.println(pet == pet2);
+	}
+	
 	@Test
 	public void testGet() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
