@@ -30,6 +30,26 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testDetachedEntities() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		Pet pet = session.get(Pet.class, 1L);
+		
+		tx.commit();
+		session.close();
+		
+		
+		session = HibernateConfig.getSessionFactory().openSession();
+		tx = session.beginTransaction();
+		
+		pet.setBirthDate(new Date());
+		
+		tx.commit();
+		session.close();
+	}
+	
+	@Test
 	public void testUpdate() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
