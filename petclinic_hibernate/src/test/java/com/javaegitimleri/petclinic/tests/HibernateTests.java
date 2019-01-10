@@ -2,6 +2,7 @@ package com.javaegitimleri.petclinic.tests;
 
 import java.util.Date;
 
+import org.hibernate.IdentifierLoadAccess;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Test;
@@ -17,6 +18,28 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testIdentifierLoadAccess() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		IdentifierLoadAccess<Pet> identifierLoadAccess = session.byId(Pet.class);
+		
+		Pet pet1 = identifierLoadAccess.load(1L);
+		
+		System.out.println("--- pet 1 loaded ---");
+		
+		System.out.println(pet1.getName());
+		System.out.println(pet1.getClass());
+		
+		Pet pet2 = identifierLoadAccess.getReference(2L);
+		
+		System.out.println("--- pet 2 loaded ---");
+		
+		System.out.println(pet2.getName());
+		System.out.println(pet2.getClass());
+	}
 	
 	@Test
 	public void testLoad() {
