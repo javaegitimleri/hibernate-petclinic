@@ -46,7 +46,7 @@ public class Pet extends BaseEntity {
 	@JoinColumn(name="owner_id")
 	private Owner owner;
 	
-	@OneToMany(orphanRemoval=true,fetch=FetchType.LAZY)
+	@OneToMany(orphanRemoval=true,fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.ALL)
 	@JoinColumn(name="pet_id")
 	@OrderColumn(name="visit_order")
 	private List<Visit> visits = new ArrayList<>();

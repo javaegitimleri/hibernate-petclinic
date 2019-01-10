@@ -35,6 +35,33 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testCascade() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		Owner owner = new Owner();
+		owner.setFirstName("Kenan");
+		owner.setLastName("Sevindik");
+		
+		Pet pet = new Pet();
+		pet.setName("my puppie");
+		
+		owner.getPets().add(pet);
+		//pet.setOwner(owner);
+		
+		Visit visit = new Visit();
+		visit.setVisitDescription("checkup");
+		visit.setVisitDate(new Date());
+		
+		pet.getVisits().add(visit);
+		
+		session.persist(owner);
+		
+		tx.commit();
+		session.close();
+	}
+	
+	@Test
 	public void testRefresh() throws IOException {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
