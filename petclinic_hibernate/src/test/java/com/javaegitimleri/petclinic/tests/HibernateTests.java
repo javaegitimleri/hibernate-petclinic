@@ -13,6 +13,7 @@ import org.hibernate.LockMode;
 import org.hibernate.MultiIdentifierLoadAccess;
 import org.hibernate.NaturalIdLoadAccess;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.SimpleNaturalIdLoadAccess;
 import org.hibernate.Transaction;
 import org.hibernate.stat.EntityStatistics;
@@ -21,11 +22,14 @@ import org.hibernate.stat.Statistics;
 import org.junit.Test;
 
 import com.javaegitimleri.petclinic.config.HibernateConfig;
+import com.javaegitimleri.petclinic.dao.ClinicDao;
+import com.javaegitimleri.petclinic.dao.OwnerDao;
 import com.javaegitimleri.petclinic.model.Address;
 import com.javaegitimleri.petclinic.model.Image;
 import com.javaegitimleri.petclinic.model.Owner;
 import com.javaegitimleri.petclinic.model.OwnerWithCompositePK;
 import com.javaegitimleri.petclinic.model.OwnerWithCompositePK.OwnerId;
+import com.javaegitimleri.petclinic.service.PetClinicService;
 import com.javaegitimleri.petclinic.model.Person;
 import com.javaegitimleri.petclinic.model.Pet;
 import com.javaegitimleri.petclinic.model.PetType;
@@ -33,6 +37,37 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testLayeredArchitecture() {
+		PetClinicService pcs = new PetClinicService();
+		OwnerDao ownerDao = new OwnerDao();
+		ClinicDao clinicDao = new ClinicDao();
+		SessionFactory sf = HibernateConfig.getSessionFactory();
+		
+		ownerDao.setSessionFactory(sf);
+		clinicDao.setSessionFactory(sf);
+		
+		pcs.setOwnerDao(ownerDao);
+		pcs.setClinicDao(clinicDao);
+		
+		Transaction tx = sf.getCurrentSession().beginTransaction();
+		
+		Owner owner1 = new Owner();
+		owner1.setFirstName("A");
+		owner1.setLastName("B");
+		
+		Owner owner2 = new Owner();
+		owner2.setFirstName("C");
+		owner2.setLastName("D");
+		try {
+			pcs.addNewOwners(1L, owner1,owner2);
+			tx.commit();
+		} catch(Exception ex) {
+			tx.rollback();
+			throw ex;
+		}
+	}
 	
 	@Test
 	public void testContextualSession2() {
