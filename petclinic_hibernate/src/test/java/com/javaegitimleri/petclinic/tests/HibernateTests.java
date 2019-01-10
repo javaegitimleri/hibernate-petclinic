@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.FlushMode;
 import org.hibernate.Hibernate;
 import org.hibernate.IdentifierLoadAccess;
 import org.hibernate.LockMode;
@@ -36,6 +37,7 @@ public class HibernateTests {
 	public void testFlushTxRelationship() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
+		session.setHibernateFlushMode(FlushMode.MANUAL);
 		
 		Owner owner = session.get(Owner.class, 7L);
 		owner.setRating(null);
@@ -44,7 +46,10 @@ public class HibernateTests {
 		
 		session.flush();
 		System.out.println("--- after flush ---");
-		tx.rollback();
+		//tx.rollback();
+		tx.commit();
+		session.close();
+		System.out.println("--- after tx commit and session close ---");
 	}
 	
 	@Test
