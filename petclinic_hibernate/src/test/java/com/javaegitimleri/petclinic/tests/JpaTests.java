@@ -3,6 +3,11 @@ package com.javaegitimleri.petclinic.tests;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.hibernate.FlushMode;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.stat.Statistics;
 import org.junit.Test;
 
 import com.javaegitimleri.petclinic.config.JpaConfig;
@@ -11,6 +16,20 @@ import com.javaegitimleri.petclinic.model.Pet;
 import com.javaegitimleri.petclinic.model.Rating;
 
 public class JpaTests {
+	
+	@Test
+	public void testHibernateApiAccess() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
+		
+		SessionFactory sf = (SessionFactory)JpaConfig.getEntityManagerFactory();
+		Session s = (Session) entityManager;
+		Transaction hibTx = (Transaction)tx;
+		
+		Statistics statistics = sf.getStatistics();
+		s.setHibernateFlushMode(FlushMode.MANUAL);
+	}
 	
 	@Test
 	public void testFindAndGetReference() {
