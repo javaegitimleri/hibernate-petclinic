@@ -9,6 +9,9 @@ import org.hibernate.NaturalIdLoadAccess;
 import org.hibernate.Session;
 import org.hibernate.SimpleNaturalIdLoadAccess;
 import org.hibernate.Transaction;
+import org.hibernate.stat.EntityStatistics;
+import org.hibernate.stat.QueryStatistics;
+import org.hibernate.stat.Statistics;
 import org.junit.Test;
 
 import com.javaegitimleri.petclinic.config.HibernateConfig;
@@ -23,6 +26,31 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testStatistics() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		session.persist(new Pet("kedicik", new Date()));
+		
+		session.get(Pet.class, 1L);
+		
+		session.flush();
+		
+		session.createQuery("select p.name from Pet p").getResultList();
+		
+		Statistics statistics = HibernateConfig.getSessionFactory().getStatistics();
+		
+		EntityStatistics entityStatistics = statistics.getEntityStatistics("com.javaegitimleri.petclinic.model.Pet");
+		QueryStatistics queryStatistics = statistics.getQueryStatistics("select p.name from Pet p");
+		
+		System.out.println("load count :" + entityStatistics.getLoadCount());
+		System.out.println("insert count :" + entityStatistics.getInsertCount());
+		
+		System.out.println("query exec count :" + queryStatistics.getExecutionCount());
+		System.out.println("query avg exec time :" + queryStatistics.getExecutionAvgTime());
+	}
 	
 	@Test
 	public void testNaturalIdAccess() {
