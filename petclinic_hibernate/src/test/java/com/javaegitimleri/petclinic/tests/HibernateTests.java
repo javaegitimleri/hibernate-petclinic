@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.IdentifierLoadAccess;
+import org.hibernate.LockMode;
 import org.hibernate.MultiIdentifierLoadAccess;
 import org.hibernate.NaturalIdLoadAccess;
 import org.hibernate.Session;
@@ -46,7 +47,8 @@ public class HibernateTests {
 		
 		System.out.println("session open :" + session.isOpen());
 		
-		session.update(pet);
+		//session.update(pet);
+		session.lock(pet, LockMode.NONE);
 		
 		Map<String, Image> imagesByFilePath = pet.getImagesByFilePath();
 		System.out.println(imagesByFilePath.getClass());
@@ -71,9 +73,13 @@ public class HibernateTests {
 		session = HibernateConfig.getSessionFactory().openSession();
 		tx = session.beginTransaction();
 		
-		pet.setBirthDate(new Date());
+		pet.setBirthDate(null);
 		
-		session.saveOrUpdate(pet);
+		//session.saveOrUpdate(pet);
+		
+		session.lock(pet, LockMode.NONE);
+		
+		pet.setType(session.load(PetType.class, 5L));
 		
 		tx.commit();
 		session.close();
