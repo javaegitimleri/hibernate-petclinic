@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Hibernate;
 import org.hibernate.IdentifierLoadAccess;
 import org.hibernate.LockMode;
 import org.hibernate.MultiIdentifierLoadAccess;
@@ -30,6 +31,26 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testHibernateInitialize() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		Pet pet = session.load(Pet.class, 1L);
+		
+		System.out.println("--- before initialize ---");
+		
+		//Hibernate.initialize(pet);
+		//Hibernate.initialize(pet.getImagesByFilePath());
+		
+		session.close();
+		
+		System.out.println("--- session closed ---");
+		
+		System.out.println(pet.getName());
+		System.out.println(pet.getImagesByFilePath().size());
+	}
 	
 	
 	@Test
