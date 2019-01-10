@@ -14,8 +14,27 @@ import com.javaegitimleri.petclinic.config.JpaConfig;
 import com.javaegitimleri.petclinic.model.Owner;
 import com.javaegitimleri.petclinic.model.Pet;
 import com.javaegitimleri.petclinic.model.Rating;
+import com.javaegitimleri.petclinic.model.Visit;
 
 public class JpaTests {
+	
+	@Test
+	public void testDelete() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
+		
+		Visit visit = entityManager.find(Visit.class, 3L);
+		
+		entityManager.clear();
+		
+		visit = entityManager.merge(visit);
+		
+		entityManager.remove(visit);
+		
+		tx.commit();
+		entityManager.close();
+	}
 	
 	@Test
 	public void testHibernateApiAccess2() {
