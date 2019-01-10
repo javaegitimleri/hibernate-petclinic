@@ -35,6 +35,19 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testContextualSession2() {
+		Session session1 = HibernateConfig.getSessionFactory().getCurrentSession();
+		Session session2 = HibernateConfig.getSessionFactory().getCurrentSession();
+		
+		System.out.println(session1 == session2);
+		session1.beginTransaction().commit();
+		session2 = HibernateConfig.getSessionFactory().getCurrentSession();
+		System.out.println(session1 == session2);
+		Session session3 = HibernateConfig.getSessionFactory().openSession();
+		System.out.println(session2 == session3);
+	}
+	
+	@Test
 	public void testContextualSession() {
 		Session session = HibernateConfig.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
