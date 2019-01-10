@@ -33,6 +33,21 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testDelete() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		Visit visit = session.get(Visit.class, 2L);
+		
+		session.clear();
+		
+		session.delete(visit);
+		
+		tx.commit();
+		session.close();
+	}
+	
+	@Test
 	public void testHibernateInitialize() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
