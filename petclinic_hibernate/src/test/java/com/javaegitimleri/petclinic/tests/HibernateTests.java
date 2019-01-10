@@ -29,6 +29,29 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testInsertWithMerge() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		Pet pet = new Pet();
+		pet.setName("kedicik 3");
+		
+		Pet pet2 = (Pet)session.merge(pet);
+		
+		System.out.println("--- after merge ---");
+		
+		pet.setBirthDate(new Date());
+		
+		System.out.println("pet id :" + pet.getId());
+		System.out.println("pet 2 id :" + pet2.getId());
+		System.out.println(pet == pet2);
+		System.out.println("pet 2 birth date :" + pet2.getBirthDate());
+		
+		tx.commit();
+		session.close();
+	}
+	
+	@Test
 	public void testSave() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
