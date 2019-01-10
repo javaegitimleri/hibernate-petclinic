@@ -35,6 +35,21 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testContextualSession() {
+		Session session = HibernateConfig.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		PetType petType = session.get(PetType.class, 1L);
+		
+		petType.setName("xxx");
+		
+		tx.commit();
+		//session.close();
+		System.out.println("--- after tx commit ---");
+		System.out.println("Session open :" + session.isOpen());
+		
+	}
+	
+	@Test
 	public void testCascade() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
