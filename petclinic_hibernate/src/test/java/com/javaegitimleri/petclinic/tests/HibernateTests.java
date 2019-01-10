@@ -23,10 +23,25 @@ import com.javaegitimleri.petclinic.model.OwnerWithCompositePK;
 import com.javaegitimleri.petclinic.model.OwnerWithCompositePK.OwnerId;
 import com.javaegitimleri.petclinic.model.Person;
 import com.javaegitimleri.petclinic.model.Pet;
+import com.javaegitimleri.petclinic.model.PetType;
 import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testUpdate() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		Pet pet = session.get(Pet.class, 1L);
+		
+		pet.setBirthDate(null);
+		pet.setType(session.load(PetType.class, 3L));
+		
+		tx.commit();
+		session.close();
+	}
 	
 	@Test
 	public void testInsertWithMerge() {
