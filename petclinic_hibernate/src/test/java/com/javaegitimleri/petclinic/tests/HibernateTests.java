@@ -1,5 +1,6 @@
 package com.javaegitimleri.petclinic.tests;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,25 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testRefresh() throws IOException {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		PetType pt = session.get(PetType.class, 1L);
+		System.out.println("--- PetType loaded ---");
+		pt.setName("xxx");
+		
+		System.out.println("--- waiting... ---");
+		System.in.read();
+		
+		session.refresh(pt);
+		
+		System.out.println("--- after refresh ---");
+		
+		System.out.println(pt.getName());
+	}
 	
 	@Test
 	public void testFlushTxRelationship() {
