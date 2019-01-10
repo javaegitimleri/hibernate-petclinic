@@ -46,9 +46,14 @@ public class HibernateTests {
 		
 		System.out.println("session open :" + session.isOpen());
 		
+		session.update(pet);
+		
 		Map<String, Image> imagesByFilePath = pet.getImagesByFilePath();
 		System.out.println(imagesByFilePath.getClass());
 		System.out.println("image size :" + imagesByFilePath.size());
+		
+		tx.commit();
+		session.close();
 		
 	}
 	
@@ -67,6 +72,8 @@ public class HibernateTests {
 		tx = session.beginTransaction();
 		
 		pet.setBirthDate(new Date());
+		
+		session.saveOrUpdate(pet);
 		
 		tx.commit();
 		session.close();
