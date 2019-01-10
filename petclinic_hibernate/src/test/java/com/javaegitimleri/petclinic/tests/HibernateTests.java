@@ -48,9 +48,11 @@ public class HibernateTests {
 		System.out.println("session open :" + session.isOpen());
 		
 		//session.update(pet);
-		session.lock(pet, LockMode.NONE);
+		//session.lock(pet, LockMode.NONE);
 		
-		Map<String, Image> imagesByFilePath = pet.getImagesByFilePath();
+		Pet pet2 = (Pet) session.merge(pet);
+		
+		Map<String, Image> imagesByFilePath = pet2.getImagesByFilePath();
 		System.out.println(imagesByFilePath.getClass());
 		System.out.println("image size :" + imagesByFilePath.size());
 		
@@ -73,13 +75,15 @@ public class HibernateTests {
 		session = HibernateConfig.getSessionFactory().openSession();
 		tx = session.beginTransaction();
 		
-		pet.setBirthDate(null);
+		pet.setBirthDate(new Date());
 		
 		//session.saveOrUpdate(pet);
 		
-		session.lock(pet, LockMode.NONE);
+		//session.lock(pet, LockMode.NONE);
 		
-		pet.setType(session.load(PetType.class, 5L));
+		Pet pet2 = (Pet) session.merge(pet);
+		
+		pet2.setType(session.load(PetType.class, 5L));
 		
 		tx.commit();
 		session.close();
