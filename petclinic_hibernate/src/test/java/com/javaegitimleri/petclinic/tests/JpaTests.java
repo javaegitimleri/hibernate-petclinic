@@ -11,6 +11,28 @@ import com.javaegitimleri.petclinic.model.Pet;
 import com.javaegitimleri.petclinic.model.Rating;
 
 public class JpaTests {
+	
+	@Test
+	public void testFindAndGetReference() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
+		
+		Pet pet = entityManager.find(Pet.class, 1L);
+		
+		System.out.println("--- pet loaded ---");
+		
+		System.out.println(pet.getName());
+		System.out.println(pet.getClass());
+		
+		Pet pet2 = entityManager.getReference(Pet.class, 2L);
+		
+		System.out.println("--- pet 2 loaded ---");
+		
+		System.out.println(pet2.getName());
+		System.out.println(pet2.getClass());
+	}
+	
 	@Test
 	public void testJpaSetup() {
 		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
