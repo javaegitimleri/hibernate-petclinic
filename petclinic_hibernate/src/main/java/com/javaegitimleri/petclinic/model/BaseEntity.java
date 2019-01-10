@@ -1,9 +1,11 @@
 package com.javaegitimleri.petclinic.model;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 
 @MappedSuperclass
 public abstract class BaseEntity {
@@ -11,6 +13,9 @@ public abstract class BaseEntity {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Long id;
 	
+	@Version
+	@Column(name="version",columnDefinition="bigint default 0")
+	private Long version;
 
 	public Long getId() {
 		return id;

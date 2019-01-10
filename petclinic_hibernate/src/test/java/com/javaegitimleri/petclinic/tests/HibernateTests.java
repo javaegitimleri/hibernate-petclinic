@@ -50,7 +50,7 @@ public class HibernateTests {
 
 		Pet pet2 = session2.get(Pet.class, 1L);
 		
-		pet1.setOwner(session1.load(Owner.class, 8L));
+		pet1.setOwner(session1.load(Owner.class, 9L));
 		
 		pet2.setType(session2.load(PetType.class, 6L));
 		
