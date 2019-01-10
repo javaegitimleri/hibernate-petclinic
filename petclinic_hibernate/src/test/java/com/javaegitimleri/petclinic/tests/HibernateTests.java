@@ -1,8 +1,10 @@
 package com.javaegitimleri.petclinic.tests;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.IdentifierLoadAccess;
+import org.hibernate.MultiIdentifierLoadAccess;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Test;
@@ -18,6 +20,20 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testMultiIdentifierLoadAccess() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		MultiIdentifierLoadAccess<Pet> multiIdentifierLoadAccess = session.byMultipleIds(Pet.class);
+		
+		List<Pet> pets = multiIdentifierLoadAccess.multiLoad(1L,2L,3L,4L,5L);
+		System.out.println("--- pets loaded ---");
+		pets.forEach(pet->{
+			System.out.println(pet.getName());
+		});
+	}
 	
 	@Test
 	public void testIdentifierLoadAccess() {
