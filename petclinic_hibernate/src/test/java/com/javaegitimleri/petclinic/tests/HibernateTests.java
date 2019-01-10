@@ -31,11 +31,16 @@ public class HibernateTests {
 		}
 		System.out.println(pet.getName());
 		System.out.println(pet.getClass());
+		System.out.println("--- session closed ---");
+		tx.commit();
+		session.close();
 		
-		Pet pet2 = session.get(Pet.class, 1L);
-		System.out.println("--- pet loaded second time ---");
-		System.out.println(pet2.getName());
-		System.out.println(pet == pet2);
+		System.out.println(pet.getBirthDate());
+		
+//		Pet pet2 = session.get(Pet.class, 1L);
+//		System.out.println("--- pet loaded second time ---");
+//		System.out.println(pet2.getName());
+//		System.out.println(pet == pet2);
 	}
 	
 	@Test
@@ -49,12 +54,14 @@ public class HibernateTests {
 			System.out.println("pet is null returning");
 			return;
 		}
+		tx.commit();
+		session.close();
 		System.out.println(pet.getName());
 		System.out.println(pet.getClass());
-		Pet pet2 = session.get(Pet.class, 1L);
-		System.out.println("--- pet loaded second time ---");
-		System.out.println(pet2.getName());
-		System.out.println(pet == pet2);
+//		Pet pet2 = session.get(Pet.class, 1L);
+//		System.out.println("--- pet loaded second time ---");
+//		System.out.println(pet2.getName());
+//		System.out.println(pet == pet2);
 	}
 	
 	@Test
