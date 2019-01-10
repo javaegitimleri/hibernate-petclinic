@@ -22,12 +22,14 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.NaturalId;
 
 @Entity
 @Table(name="t_pet")
 @SequenceGenerator(name="seqGen",sequenceName="pet_seq")
 public class Pet extends BaseEntity {
 	
+	@NaturalId
 	@Basic(optional=false)
 	@Column(name="pet_name",nullable=false)
 	private String name;

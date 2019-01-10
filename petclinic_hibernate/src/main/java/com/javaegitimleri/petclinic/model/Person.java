@@ -12,13 +12,17 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NaturalId;
+
 @Entity
 @Table(name="t_person")
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Person extends BaseEntity {
+	@NaturalId
 	@Column(name="first_name")
 	private String firstName;
 	
+	@NaturalId
 	@Column(name="last_name")
 	private String lastName;
 	

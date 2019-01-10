@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.hibernate.IdentifierLoadAccess;
 import org.hibernate.MultiIdentifierLoadAccess;
+import org.hibernate.NaturalIdLoadAccess;
 import org.hibernate.Session;
+import org.hibernate.SimpleNaturalIdLoadAccess;
 import org.hibernate.Transaction;
 import org.junit.Test;
 
@@ -15,11 +17,35 @@ import com.javaegitimleri.petclinic.model.Image;
 import com.javaegitimleri.petclinic.model.Owner;
 import com.javaegitimleri.petclinic.model.OwnerWithCompositePK;
 import com.javaegitimleri.petclinic.model.OwnerWithCompositePK.OwnerId;
+import com.javaegitimleri.petclinic.model.Person;
 import com.javaegitimleri.petclinic.model.Pet;
 import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testNaturalIdAccess() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		SimpleNaturalIdLoadAccess<Pet> simpleNaturalIdLoadAccess = session.bySimpleNaturalId(Pet.class);
+		
+		Pet pet = simpleNaturalIdLoadAccess.load("Maviþ");
+		
+		System.out.println("--- pet loaded ---");
+		
+		System.out.println(pet.getName());
+		System.out.println(pet.getId());
+		
+		NaturalIdLoadAccess<Person> naturalIdLoadAccess = session.byNaturalId(Person.class);
+		
+		Person person = naturalIdLoadAccess.using("firstName", "Jale").using("lastName", "Cengiz").load();
+		
+		System.out.println("--- person loaded ---");
+		System.out.println(person.getId());
+		System.out.println(person.getClass());
+	}
 	
 	@Test
 	public void testMultiIdentifierLoadAccess() {
