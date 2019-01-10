@@ -18,6 +18,23 @@ import com.javaegitimleri.petclinic.model.Rating;
 public class JpaTests {
 	
 	@Test
+	public void testHibernateApiAccess2() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
+		
+		Session session = (Session) entityManager.getDelegate();
+		Session session2 = entityManager.unwrap(Session.class);
+		
+		System.out.println(session == session2);
+		
+		SessionFactory sf = session.getSessionFactory();
+		
+		Statistics statistics = sf.getStatistics();
+		session.setHibernateFlushMode(FlushMode.MANUAL);
+	}
+	
+	@Test
 	public void testHibernateApiAccess() {
 		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
 		EntityTransaction tx = entityManager.getTransaction();
