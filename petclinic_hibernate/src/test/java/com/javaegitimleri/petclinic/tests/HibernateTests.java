@@ -28,6 +28,20 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testPersist() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		Pet pet = new Pet();
+		pet.setName("kedicik 1");
+		
+		session.persist(pet);
+		System.out.println("--- after persist called ---");
+		tx.commit();
+		session.close();
+	}
+	
+	@Test
 	public void testStatistics() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
