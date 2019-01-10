@@ -33,6 +33,21 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testFlushTxRelationship() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		Owner owner = session.get(Owner.class, 7L);
+		owner.setRating(null);
+		
+		session.persist(new Pet("my pet", new Date()));
+		
+		session.flush();
+		System.out.println("--- after flush ---");
+		tx.rollback();
+	}
+	
+	@Test
 	public void testDelete() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
