@@ -39,6 +39,25 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testAuditInterceptor() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		session.beginTransaction();
+		
+		Pet pet = new Pet("kedicik 4",new Date());
+		
+		session.persist(pet);
+		
+		Pet pet2 = session.get(Pet.class, 110L);
+		
+		pet2.setBirthDate(new Date());
+		
+		session.delete(session.load(Pet.class, 113L));
+		
+		session.getTransaction().commit();
+		session.close();
+	}
+	
+	@Test
 	public void testConcurrency() {
 		Session session1 = HibernateConfig.getSessionFactory().openSession();
 		session1.beginTransaction();
