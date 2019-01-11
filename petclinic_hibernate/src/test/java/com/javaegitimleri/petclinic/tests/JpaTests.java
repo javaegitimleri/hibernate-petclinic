@@ -1,5 +1,7 @@
 package com.javaegitimleri.petclinic.tests;
 
+import java.util.Date;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -17,6 +19,26 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class JpaTests {
+	
+	@Test
+	public void testLifecycleCallbacks() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
+		
+		Pet pet = new Pet("kedicik 6",new Date());
+		
+		entityManager.persist(pet);
+		
+		Pet pet2 = entityManager.find(Pet.class, 136L);
+		
+		pet2.setBirthDate(null);
+		
+		entityManager.remove(entityManager.getReference(Pet.class, 132L));
+		
+		tx.commit();
+		entityManager.close();
+	}
 	
 	@Test
 	public void testDelete() {

@@ -1,12 +1,16 @@
 package com.javaegitimleri.petclinic.model;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
+import com.javaegitimleri.petclinic.event.AuditEntityEventListener;
+
+@EntityListeners(AuditEntityEventListener.class)
 @MappedSuperclass
 public abstract class BaseEntity {
 	@Id
