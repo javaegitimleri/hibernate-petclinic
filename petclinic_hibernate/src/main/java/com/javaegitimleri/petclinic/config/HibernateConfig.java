@@ -13,7 +13,9 @@ public class HibernateConfig {
 	}
 	
 	static {
-		Configuration cfg = new Configuration().setInterceptor(new AuditInterceptor()).configure();
+		Configuration cfg = new Configuration()
+				//.setInterceptor(new AuditInterceptor())
+				.configure();
 		sessionFactory = cfg.buildSessionFactory();
 	}
 }

@@ -43,15 +43,15 @@ public class HibernateTests {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		session.beginTransaction();
 		
-		Pet pet = new Pet("kedicik 4",new Date());
+		Pet pet = new Pet("kedicik 5",new Date());
 		
 		session.persist(pet);
 		
-		Pet pet2 = session.get(Pet.class, 110L);
+		Pet pet2 = session.get(Pet.class, 132L);
 		
-		pet2.setBirthDate(new Date());
+		pet2.setBirthDate(null);
 		
-		session.delete(session.load(Pet.class, 113L));
+		session.delete(session.load(Pet.class, 110L));
 		
 		session.getTransaction().commit();
 		session.close();
