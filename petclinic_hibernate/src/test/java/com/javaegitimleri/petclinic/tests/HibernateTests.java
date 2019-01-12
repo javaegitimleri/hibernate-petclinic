@@ -16,6 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.SimpleNaturalIdLoadAccess;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.hibernate.stat.EntityStatistics;
 import org.hibernate.stat.QueryStatistics;
 import org.hibernate.stat.Statistics;
@@ -37,6 +38,24 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testHql() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		String queryString = "select p from Pet p where p.name like :petName or p.type.id = :typeId";
+		
+		Query<Pet> query = session.createQuery(queryString);
+		
+		query.setParameter("petName", "K%");
+		query.setParameter("typeId", 2L);
+		
+		List<Pet> resultList = query.getResultList();
+		
+		System.out.println("--- query executed ---");
+		
+		resultList.forEach(System.out::println);
+	}
 	
 	@Test
 	public void testAuditInterceptor() {
