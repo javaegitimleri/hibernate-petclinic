@@ -20,6 +20,7 @@ import org.hibernate.query.Query;
 import org.hibernate.stat.EntityStatistics;
 import org.hibernate.stat.QueryStatistics;
 import org.hibernate.stat.Statistics;
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.junit.Test;
 
 import com.javaegitimleri.petclinic.config.HibernateConfig;
@@ -38,6 +39,17 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testQueriesWithDTO() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		String queryString = "select p.name as name,p.birthDate as birthDate from Pet p";
+		
+		List<Pet> resultList = session.createQuery(queryString).setResultTransformer(new AliasToBeanResultTransformer(Pet.class)).getResultList();
+		
+		resultList.forEach(System.out::println);
+	}
 	
 	@Test
 	public void testReportQueries() {
