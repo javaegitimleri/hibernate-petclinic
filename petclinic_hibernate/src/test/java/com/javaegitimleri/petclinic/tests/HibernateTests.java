@@ -40,6 +40,22 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testReportQueries() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		String queryString = "select p.name,p.birthDate from Pet p";
+		
+		List<Object[]> resultList = session.createQuery(queryString).getResultList();
+		
+		for(Object[] row:resultList) {
+			String name = (String)row[0];
+			Date birthDate = (Date)row[1];
+			
+			System.out.println("Pet with name :" + name + " and bidrth date :" + birthDate);
+		}
+	}
+	
+	@Test
 	public void testJoins() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		
