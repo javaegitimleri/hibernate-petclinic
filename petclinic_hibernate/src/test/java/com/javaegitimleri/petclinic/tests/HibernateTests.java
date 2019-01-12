@@ -43,12 +43,12 @@ public class HibernateTests {
 	public void testHql() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		
-		String queryString = "select p from Pet p where p.name like :petName or p.type.id = :typeId";
+		String queryString = "select p from Pet p where p.name like ? or p.type.id = ?";
 		
 		Query<Pet> query = session.createQuery(queryString);
 		
-		query.setParameter("petName", "K%");
-		query.setParameter("typeId", 2L);
+		query.setParameter(0, "K%");
+		query.setParameter(1, 2L);
 		
 		List<Pet> resultList = query.getResultList();
 		
