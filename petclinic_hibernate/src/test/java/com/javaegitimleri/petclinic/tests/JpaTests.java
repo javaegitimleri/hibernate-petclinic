@@ -26,12 +26,12 @@ public class JpaTests {
 	public void testJpql() {
 		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
 		
-		String queryString = "select p from Pet p where p.name like :petName or p.type.id = :typeId";
+		String queryString = "select p from Pet p where p.name like ?1 or p.type.id = ?2";
 		
 		TypedQuery<Pet> typedQuery = entityManager.createQuery(queryString, Pet.class);
 		
-		typedQuery.setParameter("petName", "K%");
-		typedQuery.setParameter("typeId", 2L);
+		typedQuery.setParameter(1, "K%");
+		typedQuery.setParameter(2, 2L);
 		
 		List<Pet> resultList = typedQuery.getResultList();
 		
