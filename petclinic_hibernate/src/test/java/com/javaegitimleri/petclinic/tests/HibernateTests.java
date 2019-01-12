@@ -40,6 +40,30 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testJoins() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		String queryString = "select distinct o from Owner o left outer join o.pets p where p.name like :petName";
+		
+		Query<Owner> query = session.createQuery(queryString);
+		
+		query.setParameter("petName", "%");
+		
+//		List<Object[]> resultList = query.getResultList();
+//		
+//		for(Object[] row:resultList) {
+//			Owner o = (Owner)row[0];
+//			Pet p = (Pet)row[1];
+//			System.out.println("Owner :" + o);
+//			System.out.println("Pet :" + p);
+//		}
+		
+		List<Owner> resultList = query.getResultList();
+		
+		resultList.forEach(System.out::println);
+	}
+	
+	@Test
 	public void testHql() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		
