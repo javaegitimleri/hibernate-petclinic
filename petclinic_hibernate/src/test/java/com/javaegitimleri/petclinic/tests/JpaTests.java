@@ -1,9 +1,11 @@
 package com.javaegitimleri.petclinic.tests;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
@@ -19,6 +21,24 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class JpaTests {
+	
+	@Test
+	public void testJpql() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		
+		String queryString = "select p from Pet p where p.name like :petName or p.type.id = :typeId";
+		
+		TypedQuery<Pet> typedQuery = entityManager.createQuery(queryString, Pet.class);
+		
+		typedQuery.setParameter("petName", "K%");
+		typedQuery.setParameter("typeId", 2L);
+		
+		List<Pet> resultList = typedQuery.getResultList();
+		
+		System.out.println("--- query executed ---");
+		
+		resultList.forEach(System.out::println);
+	}
 	
 	@Test
 	public void testLifecycleCallbacks() {
