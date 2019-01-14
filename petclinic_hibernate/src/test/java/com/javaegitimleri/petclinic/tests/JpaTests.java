@@ -23,6 +23,16 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class JpaTests {
 	
 	@Test
+	public void testNativeSQL() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		
+		List<Pet> resultList = entityManager.createNativeQuery(
+				"select * from t_pet p where p.pet_name like ?1", Pet.class).setParameter(1, "K%").getResultList();
+		
+		resultList.forEach(System.out::println);
+	}
+	
+	@Test
 	public void testJpql() {
 		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
 		
