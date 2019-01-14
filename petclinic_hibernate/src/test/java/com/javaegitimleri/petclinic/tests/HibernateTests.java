@@ -16,6 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.SimpleNaturalIdLoadAccess;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.hibernate.stat.EntityStatistics;
 import org.hibernate.stat.QueryStatistics;
@@ -39,6 +40,23 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testNativeSQL() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		NativeQuery<Pet> nativeQuery = session.createNativeQuery("select * from t_pet p where p.pet_name like ?",Pet.class);
+		
+		nativeQuery.setParameter(1, "K%");
+		
+		List<Pet> resultList = nativeQuery.getResultList();
+		
+//		for(Object[] row:resultList) {
+//			System.out.println(row[0] + " - " + row[1] + " - " + row[2] + " - " + row[3] + " - " + row[4] + " - " + row[5]);
+//		}
+		
+		resultList.forEach(System.out::println);
+	}
 	
 	@Test
 	public void testNamedQuery() {
