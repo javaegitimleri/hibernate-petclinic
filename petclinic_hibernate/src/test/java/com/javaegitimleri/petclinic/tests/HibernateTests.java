@@ -52,7 +52,7 @@ public class HibernateTests {
 	public void testSelectNPlusOneProblem() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		
-		List<Owner> resultList = session.createQuery("from Owner", Owner.class).getResultList();
+		List<Owner> resultList = session.createQuery("select distinct o from Owner o left join fetch o.pets p left join fetch p.type left join fetch o.address.city", Owner.class).getResultList();
 		
 		System.out.println("--- from Owner query executed ---");
 		
