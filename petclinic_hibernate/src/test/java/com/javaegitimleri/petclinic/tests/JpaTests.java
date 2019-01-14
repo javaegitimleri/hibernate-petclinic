@@ -10,6 +10,7 @@ import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
@@ -23,6 +24,7 @@ import org.hibernate.stat.Statistics;
 import org.junit.Test;
 
 import com.javaegitimleri.petclinic.config.JpaConfig;
+import com.javaegitimleri.petclinic.model.Image;
 import com.javaegitimleri.petclinic.model.Owner;
 import com.javaegitimleri.petclinic.model.Pet;
 import com.javaegitimleri.petclinic.model.PetType;
@@ -31,6 +33,29 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class JpaTests {
+	
+	@Test
+	public void testBulkUpdateWithCriteriaApi() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
+		
+		CriteriaUpdate<Image> criteriaUpdate = criteriaBuilder.createCriteriaUpdate(Image.class);
+		
+		Root<Image> root = criteriaUpdate.from(Image.class);
+		
+		criteriaUpdate.set(root.get("pet"), (Pet)null);
+		
+		int updateCount = entityManager.createQuery(criteriaUpdate).executeUpdate();
+		
+		System.out.println("--- query executed, update count is :" + updateCount + " ---");
+		
+		tx.commit();
+		entityManager.close();
+	}
 	
 	@Test
 	public void testCriteriaApiWithMetamodel() {
