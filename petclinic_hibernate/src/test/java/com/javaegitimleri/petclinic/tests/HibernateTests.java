@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
 import org.hibernate.Hibernate;
 import org.hibernate.IdentifierLoadAccess;
@@ -16,6 +17,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.SimpleNaturalIdLoadAccess;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.SimpleExpression;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.hibernate.stat.EntityStatistics;
@@ -40,6 +44,25 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testCriteriaAPI() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		Criteria criteria = session.createCriteria(Pet.class);
+		
+		SimpleExpression likeNameCriterion = Restrictions.like("name", "K%");
+		
+		SimpleExpression eqTypeIdCriterion = Restrictions.eq("type.id", 4L);
+		
+		LogicalExpression orCriterion = Restrictions.or(likeNameCriterion,eqTypeIdCriterion);
+		
+		criteria.add(orCriterion);
+		
+		List<Pet> list = criteria.list();
+		
+		list.forEach(System.out::println);
+	}
 	
 	@Test
 	public void testNativeSQL() {
