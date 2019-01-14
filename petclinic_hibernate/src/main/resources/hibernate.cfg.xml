@@ -18,6 +18,7 @@
   <mapping class="com.javaegitimleri.petclinic.model.PetType"/>
   <mapping class="com.javaegitimleri.petclinic.model.Specialty"/>
   <mapping class="com.javaegitimleri.petclinic.model.Person"/>
+  <mapping package="com.javaegitimleri.petclinic.model"/>
   <!-- 
   <event type="post-insert">
   	<listener class="com.javaegitimleri.petclinic.event.AuditEntityInsertListener"/>

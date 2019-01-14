@@ -25,7 +25,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.NaturalId;
 
-@NamedQuery(name="findPetsByName",query="from Pet p where p.name like :name")
+//@NamedQuery(name="findPetsByName",query="from Pet p where p.name like :name")
 @Entity
 @Table(name="t_pet")
 @SequenceGenerator(name="seqGen",sequenceName="pet_seq")
