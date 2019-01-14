@@ -49,6 +49,38 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testPaging() {
+		int pageSize = 2;
+		
+		String queryString = "select distinct p from Pet p left join p.visits v where v.visitDate <= :today";
+		
+		String countQueryString = "select count(distinct p.id) from Pet p left join p.visits v where v.visitDate <= :today";
+		
+		Date today = new Date();
+		
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		Long petsCount = session.createQuery(countQueryString,Long.class).setParameter("today", today).getSingleResult();
+		
+		Long pageCount = petsCount / pageSize;
+		
+		pageCount += petsCount % pageSize != 0 ? 1:0;
+		
+		System.out.println("Entity count is :" + petsCount);
+		System.out.println("Page count is :" + pageCount);
+		
+		for(int page=0;page<pageCount;page++) {
+			Query<Pet> query = session.createQuery(queryString + " order by p.id asc",Pet.class);
+			query.setParameter("today", today);
+			query.setFirstResult(page * pageSize);
+			query.setMaxResults(pageSize);
+			List<Pet> resultList = query.getResultList();
+			resultList.forEach(System.out::println);
+			System.out.println("--- current page is :" + page + " ---");
+		}
+	}
+	
+	@Test
 	public void testBatchFetching() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		
