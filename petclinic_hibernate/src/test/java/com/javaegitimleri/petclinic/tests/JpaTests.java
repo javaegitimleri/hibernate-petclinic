@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.FlushMode;
@@ -21,6 +22,17 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class JpaTests {
+	
+	@Test
+	public void testNativeSQLWithSqlResultSetMapping() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		Query nativeQuery = entityManager.createNativeQuery("select * from t_pet p where p.pet_name like ?1", "petWithNameAndBirthDate");
+		nativeQuery.setParameter(1, "K%");
+		
+		List<Pet> resultList = nativeQuery.getResultList();
+		
+		resultList.forEach(System.out::println);
+	}
 	
 	@Test
 	public void testNativeSQL() {

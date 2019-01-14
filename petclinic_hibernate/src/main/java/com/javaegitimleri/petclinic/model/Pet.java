@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -17,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,6 +28,10 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.NaturalId;
 
+@SqlResultSetMapping(name="petWithNameAndBirthDate",classes=@ConstructorResult(targetClass=Pet.class,columns= {
+		@ColumnResult(name="pet_name",type=String.class),
+		@ColumnResult(name="birth_date",type=Date.class)
+}))
 //@NamedQuery(name="findPetsByName",query="from Pet p where p.name like :name")
 @Entity
 @Table(name="t_pet")
