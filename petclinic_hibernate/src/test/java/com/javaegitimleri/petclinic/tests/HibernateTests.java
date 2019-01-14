@@ -49,6 +49,21 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testCollectionCache() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		Owner owner = session.get(Owner.class, 13L);
+		System.out.println(owner.getPets().size());
+		System.out.println("--- first session accessed owner pets collection ---");
+		session.close();
+		
+		session = HibernateConfig.getSessionFactory().openSession();
+		owner = session.get(Owner.class, 13L);
+		System.out.println(owner.getPets().size());
+		System.out.println("--- second session accessed owner pets collection ---");
+	}
+	
+	@Test
 	public void testEntityCache() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		
