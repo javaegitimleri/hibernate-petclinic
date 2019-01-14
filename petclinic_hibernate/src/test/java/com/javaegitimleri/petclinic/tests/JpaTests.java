@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -28,6 +29,29 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class JpaTests {
+	
+	@Test
+	public void testCriteriaApiWithOuterJoin() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<Owner> criteriaQuery = criteriaBuilder.createQuery(Owner.class);
+		
+		Root<Owner> root = criteriaQuery.from(Owner.class);
+		
+		Join<Owner, Pet> join = root.join("pets",JoinType.LEFT);
+		
+		Predicate nameLikePredicate = criteriaBuilder.like(join.get("name"), "K%");
+		
+		criteriaQuery.where(nameLikePredicate);
+		
+		TypedQuery<Owner> typedQuery = entityManager.createQuery(criteriaQuery);
+		
+		List<Owner> resultList = typedQuery.getResultList();
+		
+		resultList.forEach(System.out::println);
+	}
 	
 	@Test
 	public void testCriteriaApiWithJoin() {
