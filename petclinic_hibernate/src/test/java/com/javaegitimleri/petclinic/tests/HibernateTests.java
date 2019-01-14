@@ -49,6 +49,23 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testBatchFetching() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		List<Pet> resultList = session.createQuery("from Pet", Pet.class).getResultList();
+		
+		//session.clear();
+		
+		resultList.forEach(pet->{
+			PetType type = pet.getType();
+			if(type!=null) {
+				System.out.println("Pet type is " + type.getName());
+			}
+			System.out.println("Visits size is :" + pet.getVisits().size());
+		});
+	}
+	
+	@Test
 	public void testSelectNPlusOneProblem() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		

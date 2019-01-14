@@ -24,6 +24,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.NaturalId;
@@ -47,14 +48,15 @@ public class Pet extends BaseEntity {
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="type_id")
 	private PetType type;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="owner_id")
 	private Owner owner;
 	
+	@BatchSize(size=10)
 	@OneToMany(orphanRemoval=true,fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.ALL)
 	@JoinColumn(name="pet_id")
 	@OrderColumn(name="visit_order")
