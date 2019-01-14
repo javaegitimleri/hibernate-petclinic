@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -29,6 +30,27 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class JpaTests {
+	
+	@Test
+	public void testCriteriaWithTupleProjection() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<Tuple> tupleCriteriaQuery = criteriaBuilder.createTupleQuery();
+		
+		Root<Pet> root = tupleCriteriaQuery.from(Pet.class);
+		
+		tupleCriteriaQuery.multiselect(root.get("name").alias("petName"),root.get("birthDate").alias("birthDate"));
+		
+		TypedQuery<Tuple> typedQuery = entityManager.createQuery(tupleCriteriaQuery);
+		
+		List<Tuple> resultList = typedQuery.getResultList();
+		
+		resultList.forEach(rl->{
+			System.out.println(rl.get(0) + " - " + rl.get("birthDate"));
+		});
+	}
 	
 	@Test
 	public void testCriteriaApiWithMultiSelectProjection() {
