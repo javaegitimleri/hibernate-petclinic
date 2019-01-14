@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Join;
@@ -33,6 +34,27 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class JpaTests {
+	
+	@Test
+	public void testBulkDelete() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
+		
+		CriteriaDelete<Image> criteriaDelete = criteriaBuilder.createCriteriaDelete(Image.class);
+		
+		criteriaDelete.from(Image.class);
+
+		int deleteCount = entityManager.createQuery(criteriaDelete).executeUpdate();
+		
+		System.out.println("--- query executed, delete count is :" + deleteCount);
+		
+		tx.commit();
+		entityManager.close();
+	}
 	
 	@Test
 	public void testBulkUpdateWithCriteriaApi() {
