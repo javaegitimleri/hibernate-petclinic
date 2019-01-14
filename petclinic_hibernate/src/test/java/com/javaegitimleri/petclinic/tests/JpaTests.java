@@ -26,10 +26,32 @@ import com.javaegitimleri.petclinic.config.JpaConfig;
 import com.javaegitimleri.petclinic.model.Owner;
 import com.javaegitimleri.petclinic.model.Pet;
 import com.javaegitimleri.petclinic.model.PetType;
+import com.javaegitimleri.petclinic.model.Pet_;
 import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class JpaTests {
+	
+	@Test
+	public void testCriteriaApiWithMetamodel() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<Pet> criteriaQuery = criteriaBuilder.createQuery(Pet.class);
+		
+		Root<Pet> root = criteriaQuery.from(Pet.class);
+		
+		Predicate predicate = criteriaBuilder.like(root.get(Pet_.name), "K%");
+		
+		criteriaQuery.where(predicate);
+		
+		TypedQuery<Pet> typedQuery = entityManager.createQuery(criteriaQuery);
+		
+		List<Pet> resultList = typedQuery.getResultList();
+		
+		resultList.forEach(System.out::println);
+	}
 	
 	@Test
 	public void testCriteriaWithTupleProjection() {
