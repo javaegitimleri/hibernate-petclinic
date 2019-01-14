@@ -37,7 +37,7 @@ public class JpaTests {
 		
 		Root<Pet> root = criteriaQuery.from(Pet.class);
 		
-		Predicate likeNamePredicate = criteriaBuilder.like(root.get("name"), "K%");
+		Predicate likeNamePredicate = criteriaBuilder.like(root.get("name"), criteriaBuilder.parameter(String.class, "petName"));
 		
 		Predicate eqTypePredicate = criteriaBuilder.equal(root.get("type"), 4L);
 		
@@ -47,6 +47,8 @@ public class JpaTests {
 		
 		
 		TypedQuery<Pet> typedQuery = entityManager.createQuery(criteriaQuery);
+		
+		typedQuery.setParameter("petName", "K%");
 
 		List<Pet> resultList = typedQuery.getResultList();
 		
