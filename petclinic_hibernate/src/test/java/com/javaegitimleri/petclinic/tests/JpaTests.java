@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -22,10 +23,35 @@ import org.junit.Test;
 import com.javaegitimleri.petclinic.config.JpaConfig;
 import com.javaegitimleri.petclinic.model.Owner;
 import com.javaegitimleri.petclinic.model.Pet;
+import com.javaegitimleri.petclinic.model.PetType;
 import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class JpaTests {
+	
+	@Test
+	public void testCriteriaApiWithJoin() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<Pet> criteriaQuery = criteriaBuilder.createQuery(Pet.class);
+		
+		Root<Pet> root = criteriaQuery.from(Pet.class);
+		
+		Join<Pet, PetType> join = root.join("type");
+		
+		Predicate predicate = criteriaBuilder.equal(join.get("id"), 4L);
+		
+		
+		criteriaQuery.where(predicate);
+		
+		TypedQuery<Pet> typedQuery = entityManager.createQuery(criteriaQuery);
+		
+		List<Pet> resultList = typedQuery.getResultList();
+		
+		resultList.forEach(System.out::println);
+	}
 	
 	@Test
 	public void testCriteriaApi() {
