@@ -49,6 +49,19 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testBulkDelete() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		session.beginTransaction();
+		
+		int deleteCount = session.createQuery("delete Image i where i.pet.id = 3").executeUpdate();
+		
+		System.out.println("--- Delete executed, delete count is :" + deleteCount + " ---");
+		
+		session.getTransaction().commit();
+		session.close();
+	}
+	
+	@Test
 	public void testBulkUpdate() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		session.beginTransaction();
