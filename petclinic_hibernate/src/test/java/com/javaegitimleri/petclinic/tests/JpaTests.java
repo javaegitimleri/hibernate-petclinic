@@ -31,6 +31,25 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class JpaTests {
 	
 	@Test
+	public void testCriteriaApiWithMultiSelectProjection() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<Pet> criteriaQuery = criteriaBuilder.createQuery(Pet.class);
+		
+		Root<Pet> root = criteriaQuery.from(Pet.class);
+		
+		criteriaQuery.multiselect(root.get("name"),root.get("birthDate"));
+		
+		TypedQuery<Pet> typedQuery = entityManager.createQuery(criteriaQuery);
+
+		List<Pet> resultList = typedQuery.getResultList();
+		
+		resultList.forEach(System.out::println);
+	}
+	
+	@Test
 	public void testCriteriaApiWithOuterJoin() {
 		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
 		
