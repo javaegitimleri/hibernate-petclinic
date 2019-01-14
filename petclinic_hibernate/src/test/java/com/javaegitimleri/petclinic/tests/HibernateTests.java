@@ -41,6 +41,19 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testNamedQuery() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		Query<Pet> query = session.createNamedQuery("findPetsByName", Pet.class);
+		
+		query.setParameter("name", "K%");
+		
+		List<Pet> resultList = query.getResultList();
+		
+		resultList.forEach(System.out::println);
+	}
+	
+	@Test
 	public void testQueriesWithDTO() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		
