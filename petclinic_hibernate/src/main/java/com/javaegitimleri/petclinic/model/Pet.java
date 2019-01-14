@@ -27,6 +27,8 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NaturalId;
 
 @SqlResultSetMapping(name="petWithNameAndBirthDate",classes=@ConstructorResult(targetClass=Pet.class,columns= {
@@ -56,7 +58,8 @@ public class Pet extends BaseEntity {
 	@JoinColumn(name="owner_id")
 	private Owner owner;
 	
-	@BatchSize(size=10)
+	@Fetch(FetchMode.SUBSELECT)
+	//@BatchSize(size=10)
 	@OneToMany(orphanRemoval=true,fetch=FetchType.LAZY,cascade=javax.persistence.CascadeType.ALL)
 	@JoinColumn(name="pet_id")
 	@OrderColumn(name="visit_order")
