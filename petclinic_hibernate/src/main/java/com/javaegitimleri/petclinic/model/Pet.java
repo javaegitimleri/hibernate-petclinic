@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
@@ -33,6 +34,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NaturalId;
 
+@Cacheable(true)
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @SqlResultSetMapping(name="petWithNameAndBirthDate",classes=@ConstructorResult(targetClass=Pet.class,columns= {
 		@ColumnResult(name="pet_name",type=String.class),

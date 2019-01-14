@@ -36,6 +36,20 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class JpaTests {
 	
 	@Test
+	public void testEntityCache() {
+		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		entityManager.find(Pet.class, 1L);
+		System.out.println("--- first entity manager loaded pet ---");
+		
+		entityManager.close();
+		
+		entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
+		Pet pet = entityManager.find(Pet.class, 1L);
+		System.out.println("--- second entity manager loaded pet ---");
+		System.out.println(pet.getName());
+	}
+	
+	@Test
 	public void testBulkDelete() {
 		EntityManager entityManager = JpaConfig.getEntityManagerFactory().createEntityManager();
 		
