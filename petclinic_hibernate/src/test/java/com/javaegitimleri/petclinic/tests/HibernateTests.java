@@ -49,6 +49,20 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testSelectNPlusOneProblem() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		List<Owner> resultList = session.createQuery("from Owner", Owner.class).getResultList();
+		
+		System.out.println("--- from Owner query executed ---");
+		
+		resultList.forEach(owner->{
+			System.out.println("---");
+			System.out.println("Owner pets size is :" + owner.getPets().size());
+		});
+	}
+	
+	@Test
 	public void testCriteriaApiWithJoins() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		
