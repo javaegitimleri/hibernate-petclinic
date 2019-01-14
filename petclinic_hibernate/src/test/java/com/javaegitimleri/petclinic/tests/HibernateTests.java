@@ -49,6 +49,19 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testBulkUpdate() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		session.beginTransaction();
+		
+		int updateCount = session.createQuery("update versioned ImageContent set content = null").executeUpdate();
+		
+		System.out.println("--- update executed, update count is :" + updateCount + " ---");
+		
+		session.getTransaction().commit();
+		session.close();
+	}
+	
+	@Test
 	public void testPaging() {
 		int pageSize = 2;
 		
