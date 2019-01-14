@@ -24,6 +24,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
+import org.hibernate.sql.JoinType;
 import org.hibernate.stat.EntityStatistics;
 import org.hibernate.stat.QueryStatistics;
 import org.hibernate.stat.Statistics;
@@ -46,6 +47,27 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testCriteriaApiWithJoins() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		Criteria rootCriteria = session.createCriteria(Owner.class);
+		
+		//Criteria petsCriteria = rootCriteria.createCriteria("pets");
+		
+		//petsCriteria.add(Restrictions.like("name", "K%"));
+		
+		rootCriteria.createAlias("pets", "p",JoinType.LEFT_OUTER_JOIN);
+		
+		//rootCriteria.add(Restrictions.like("p.name", "K%"));
+		
+		rootCriteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		
+		List<Owner> list = rootCriteria.list();
+		
+		list.forEach(System.out::println);
+	}
 	
 	@Test
 	public void testCriteriaApiWithProjections() {
