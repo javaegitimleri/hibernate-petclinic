@@ -18,6 +18,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.SimpleNaturalIdLoadAccess;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
 import org.hibernate.query.NativeQuery;
@@ -44,6 +46,28 @@ import com.javaegitimleri.petclinic.model.Rating;
 import com.javaegitimleri.petclinic.model.Visit;
 
 public class HibernateTests {
+	
+	@Test
+	public void testCriteriaApiWithProjections() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		Criteria criteria = session.createCriteria(Pet.class);
+		
+		ProjectionList projectionList = Projections.projectionList()
+				.add(Projections.property("name").as("name")).add(Projections.property("birthDate").as("birthDate"));
+		
+		criteria.setProjection(projectionList);
+		
+		criteria.setResultTransformer(new AliasToBeanResultTransformer(Pet.class));
+	
+		List<Pet> list = criteria.list();
+		
+//		for(Object[] row:list) {
+//			System.out.println(row[0] + " - " + row[1]);
+//		}
+		
+		list.forEach(System.out::println);
+	}
 	
 	@Test
 	public void testCriteriaAPI() {
