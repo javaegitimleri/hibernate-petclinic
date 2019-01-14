@@ -49,6 +49,29 @@ import com.javaegitimleri.petclinic.model.Visit;
 public class HibernateTests {
 	
 	@Test
+	public void testQueryCache() {
+		Session session = HibernateConfig.getSessionFactory().openSession();
+		
+		Query<Pet> query = session.createQuery("from Pet", Pet.class);
+		query.setCacheable(true);
+		query.getResultList();
+		
+		System.out.println("--- query executed by the first session ---");
+		
+		session.close();
+		
+		session = HibernateConfig.getSessionFactory().openSession();
+		
+		query = session.createQuery("from Pet", Pet.class);
+		query.setCacheable(true);
+		List<Pet> resultList = query.getResultList();
+		
+		System.out.println("--- query executed by the second session ---");
+		
+		System.out.println("Result size :" + resultList.size());
+	}
+	
+	@Test
 	public void testCollectionCache() {
 		Session session = HibernateConfig.getSessionFactory().openSession();
 		
