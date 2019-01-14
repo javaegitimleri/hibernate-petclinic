@@ -25,12 +25,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.NaturalId;
 
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 @SqlResultSetMapping(name="petWithNameAndBirthDate",classes=@ConstructorResult(targetClass=Pet.class,columns= {
 		@ColumnResult(name="pet_name",type=String.class),
 		@ColumnResult(name="birth_date",type=Date.class)
